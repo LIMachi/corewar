@@ -6,7 +6,7 @@
 /*   By: hmartzol <hmartzol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/12 20:25:23 by hmartzol          #+#    #+#             */
-/*   Updated: 2017/08/13 00:49:44 by hmartzol         ###   ########.fr       */
+/*   Updated: 2017/08/13 01:04:10 by hmartzol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,20 @@ void	fetch(t_processor *env, t_process *p)
 	// }
 }
 
+void	effect(t_mem_case c)
+{
+	if (c.status & E_PC)
+		printf("\e[1m");
+	if (!(c.status & E_TAKEN))
+	{
+		printf("\e[2m");
+		return ;
+	}
+	if (c.owner == 1)
+		printf("\e[32m");
+	return ;
+}
+
 void	print(t_processor *env)
 {
 	int	i;
@@ -165,7 +179,8 @@ void	print(t_processor *env)
 	{
 		if (i && !(i % MEM_WIDTH))
 			printf("\n");
-		printf("%.2hhX ", env->mem[i].code);
+		effect(env->mem[i]);
+		printf("%.2hhX\e[0m ", env->mem[i].code);
 	}
 	printf("\n");
 }
@@ -291,7 +306,6 @@ int	main(int argc, char **argv)
 	while (++i < env.nb_champ)
 	{
 		m = (MEM_SIZE / env.nb_champ) * i % MEM_SIZE;
-		printf("%d\n", m);
 		new_process(&env, &env.champ[i], m, m);
 	}
 	// new_process(&env, &test, 0, 0);
