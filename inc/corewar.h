@@ -6,11 +6,16 @@
 /*   By: hmartzol <hmartzol@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/12 20:30:49 by hmartzol          #+#    #+#             */
-/*   Updated: 2017/08/13 00:15:08 by hmartzol         ###   ########.fr       */
+/*   Updated: 2017/08/14 23:15:13 by hmartzol         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "op.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <string.h>
 
 #define INPLACE_CHAR '$'
 
@@ -70,3 +75,8 @@ typedef struct		s_processor
 	t_mem_case		mem[MEM_SIZE];
 	int				dump;
 }					t_processor;
+
+void				rev_endian_mem(unsigned int *p, unsigned int size);
+unsigned int		rev_endian(unsigned int i);
+
+t_op				get_op(char op_code);
